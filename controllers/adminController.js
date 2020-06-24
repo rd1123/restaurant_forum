@@ -2,7 +2,7 @@ const fs = require('fs')
 const db = require('../models')
 
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = 'c8982010a557451'
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const Restaurant = db.Restaurant
 

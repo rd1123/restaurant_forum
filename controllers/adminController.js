@@ -15,6 +15,7 @@ let adminController = {
       })
     })
   },
+
   creatRestaurant: (req, res) => {
     return res.render('admin/create')
   },
@@ -72,6 +73,7 @@ let adminController = {
       })
     })
   },
+
   putRestaurant: (req, res) => {
     if (!req.body.name) {
       req.flash('error_msg', "name didn't exist")
@@ -122,6 +124,15 @@ let adminController = {
             res.redirect('/admin/restaurants')
           })
       })
+  },
+
+  /////// user relation
+  getUsers: (req, res) => {
+    return res.render('admin/users')
+  },
+
+  putUsers: (req, res) => {
+    return res.redirect('/admin/users')
   }
 }
 

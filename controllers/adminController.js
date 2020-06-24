@@ -2,8 +2,10 @@ const fs = require('fs')
 const db = require('../models')
 
 const imgur = require('imgur-node-api')
+const userController = require('./userController')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
+const User = db.User
 const Restaurant = db.Restaurant
 
 
@@ -128,11 +130,27 @@ let adminController = {
 
   /////// user relation
   getUsers: (req, res) => {
-    return res.render('admin/users')
+    User.findAll({ raw: true }).then((users) => {
+      for (let item in users) {
+        users[item].role = 'admin'
+        users[item].unrole = 'user';
+        if (users[item].isAdmin == 0) {
+          users[item].role = 'user'
+          users[item].unrole = 'admin'
+        }
+      }
+      return res.render('admin/users', { users: users })
+    }).catch((err) => res.status(422).json(err))
+
   },
 
   putUsers: (req, res) => {
-    return res.redirect('/admin/users')
+    User.findByPk(req.params.id).then((user) => {
+      return user.update({
+        isAdmin: !user.isAdmin
+      })
+
+    }).then(user => res.redirect('/admin/users'))
   }
 }
 

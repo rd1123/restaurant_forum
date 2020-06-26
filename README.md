@@ -27,6 +27,11 @@ npm install
 npm run dev
 ```
 出現連結成功即可
+
+## Heroku
+可在以下網址進行線上操作
+[Heroku restaurant forum](https://powerful-coast-13380.herokuapp.com/signin)
+
 # 使用工具
 + [Visual Studio Code](https://visualstudio.microsoft.com/zh-hant/)
 + [Express](https://www.npmjs.com/package/express)

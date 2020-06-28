@@ -6,12 +6,27 @@
   <a href="/admin/categories">Categories</a>
 </div>
 <br />
+{{#if cateName}}
+<form action="/admin/categories/{{categories.id}}?_method=PUT" method="post">
+  <div class="row">
+    <input type="text" class="form-control col-6" name="categoryName" id="categoryName" placeholder="Enter name"
+      value="{{cateName}}">
+    <button type="submit" class="btn btn-primary col-2 ml-2">Update</button>
+
+    <a href="/admin/categories" style="padding: 10px 0 0 10px;">or Create New</a>
+  </div>
+</form>
+
+{{else}}
 <form action="/admin/categories" method="post">
   <div class="row">
     <input type="text" class="form-control col-6" name="categoryName" id="categoryName" placeholder="Enter name">
     <button type="submit" class="btn btn-primary col-2 ml-2">Submit</button>
   </div>
 </form>
+
+{{/if}}
+
 
 <hr>
 <br />

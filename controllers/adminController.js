@@ -7,11 +7,15 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const User = db.User
 const Restaurant = db.Restaurant
-
+const Category = db.Category
 
 let adminController = {
   getRestaurants: (req, res) => {
-    return Restaurant.findAll({ raw: true }).then(restaurants => {
+    return Restaurant.findAll({
+      raw: true,
+      nest: true,
+      include: [Category]
+    }).then(restaurants => {
       return res.render('admin/restaurants', {
         restaurants: restaurants
       })
@@ -61,11 +65,12 @@ let adminController = {
   },
 
   getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => {
-      return res.render('admin/restaurant', {
-        restaurant: restaurant
+    return Restaurant.findByPk(req.params.id, { include: [Category] })
+      .then(restaurant => {
+        return res.render('admin/restaurant', {
+          restaurant: restaurant.toJSON()
+        })
       })
-    })
   },
 
   editRestaurant: (req, res) => {

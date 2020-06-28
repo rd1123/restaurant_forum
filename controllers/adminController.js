@@ -65,10 +65,14 @@ let adminController = {
   },
 
   getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, { include: [Category] })
+    return Restaurant.findByPk(req.params.id, {
+      raw: true,
+      nest: true,
+      include: [Category]
+    })
       .then(restaurant => {
         return res.render('admin/restaurant', {
-          restaurant: restaurant.toJSON()
+          restaurant: restaurant
         })
       })
   },

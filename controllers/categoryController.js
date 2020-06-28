@@ -3,7 +3,12 @@ const Category = db.Category
 
 module.exports = {
   getCategories: (req, res) => {
-    res.send('all category')
+    Category.findAll({
+      raw: true,
+      nest: true,
+    }).then(categories => {
+      return res.render('admin/categories', { categories: categories })
+    })
   },
 
   postCategory: (req, res) => {

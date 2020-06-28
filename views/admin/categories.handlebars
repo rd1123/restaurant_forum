@@ -1,0 +1,45 @@
+<h1>餐廳後台</h1>
+
+<div>
+  <a href="/admin/restaurants">Restaurant</a> |
+  <a href="/admin/users">Users</a> |
+  <a href="/admin/categories">Categories</a>
+</div>
+<br />
+<form action="/admin/categories" method="post">
+  <div class="row">
+    <input type="text" class="form-control col-6" name="categoryName" id="categoryName" placeholder="Enter name">
+    <button type="submit" class="btn btn-primary col-2 ml-2">Submit</button>
+  </div>
+</form>
+
+<hr>
+<br />
+<br />
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Category Name</th>
+      <th scope="col">#</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each categories}}
+    <tr>
+      <th scope="row">{{this.id}}</th>
+      <td>{{this.name}}</td>
+      <td>
+        <button type="button" class="btn btn-link">
+          <a href="/admin/categories/{{this.id}}">
+            Edit
+          </a>
+        </button>
+        <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+          <button type="submit" class="btn btn-link">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -4,9 +4,11 @@ const Category = db.Category
 module.exports = {
   getCategories: (req, res) => {
     let cateName = ''
+    let putId = ''
     if (req.params.id) {
       Category.findByPk(req.params.id).then(category => {
         cateName = category.name
+        putId = category.id
       })
     }
 
@@ -14,7 +16,7 @@ module.exports = {
       raw: true,
       nest: true,
     }).then(categories => {
-      return res.render('admin/categories', { categories: categories, cateName })
+      return res.render('admin/categories', { categories: categories, cateName, putId })
     })
   },
 
@@ -31,10 +33,21 @@ module.exports = {
   },
 
   putCategory: (req, res) => {
-    res.send('put category')
+    Category.findByPk(req.params.id).then(category => {
+      category.update({
+        name: req.body.categoryName
+      }).then(category => {
+        return res.redirect('/admin/categories')
+      }).catch(err => res.status(422).json(err))
+    })
+
   },
 
   deleteCategory: (req, res) => {
-    res.send('delete category')
+    Category.findByPk(req.params.id).then(category => {
+      category.destroy().then(category => {
+        res.redirect('/admin/categories')
+      })
+    })
   }
 }

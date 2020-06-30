@@ -3,6 +3,7 @@ const db = require('../models')
 const User = db.User
 
 const imgur = require('imgur-node-api')
+const { putUsers } = require('./adminController')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
@@ -48,13 +49,48 @@ const userController = {
   },
 
   getUser: (req, res) => {
+    if (req.params.id != req.user.id) {
+      req.flash('error_msg', '未具有相關權限')
+      return res.redirect(`/users/${req.user.id}`)
+    }
     res.render('user')
   },
   editUser: (req, res) => {
+    if (req.params.id != req.user.id) {
+      req.flash('error_msg', '未具有相關權限')
+      return res.redirect(`/users/${req.user.id}`)
+    }
     res.render('userEdit')
   },
   putUser: (req, res) => {
-    res.send('put user')
+    if (req.params.id != req.user.id) {
+      req.flash('error_msg', '未具有相關權限')
+      return res.redirect(`/users/${req.user.id}`)
+    }
+
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        return User.findByPk(req.user.id).then(user => {
+          user.update({
+            name: req.body.name,
+            image: file ? img.data.link : user.image
+          }).then(user => {
+            res.redirect(`/users/${req.params.id}`)
+          })
+        })
+      })
+    } else {
+      return User.findByPk(req.user.id).then(user => {
+        user.update({
+          name: req.body.name,
+          image: user.image
+        }).then(user => {
+          res.redirect(`/users/${req.params.id}`)
+        })
+      })
+    }
   }
 }
 module.exports = userController

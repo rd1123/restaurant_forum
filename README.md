@@ -1,11 +1,10 @@
 # restaurant forum
 餐廳論壇，供註冊帳號，管理清單功能
-
-## 更新
-20200624 更新user頁面，操作user權限功能
+可篩選分類清單
+可以針對單一餐廳做評論功能
 
 ## 功能
-+ 可註冊帳號，查看、管理restaurant
++ 可註冊帳號，查看、管理、評論restaurant
 + 擁有CRUD功能操作restaurant
 
 ## 相關安裝
@@ -51,3 +50,4 @@ npm run dev
 + [imgur-node-api](https://www.npmjs.com/package/imgur-node-api)
 + [multer](https://www.npmjs.com/package/multer)
 + [pg](https://www.npmjs.com/package/pg)
++ [moment](https://www.npmjs.com/package/moment)

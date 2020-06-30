@@ -40,6 +40,9 @@ module.exports = (app, passport) => {
   app.put('/admin/restaurants/:id', authenticated, upload.single('image'), adminController.putRestaurant)
   app.delete('/admin/restaurants/:id', authenticated, adminController.deleteRestaurant)
 
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
 
@@ -47,8 +50,10 @@ module.exports = (app, passport) => {
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
 
-  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
-  app.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
+  app.get('/users/:id', userController.getUser)
+  app.get('/users/:id/edit', userController.editUser)
+  app.put('/users/:id', userController.putUser)
+
 
   app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
   app.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)

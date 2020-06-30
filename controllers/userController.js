@@ -2,6 +2,9 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -45,10 +48,10 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    res.send('get user')
+    res.render('user')
   },
   editUser: (req, res) => {
-    res.send('edit user')
+    res.render('userEdit')
   },
   putUser: (req, res) => {
     res.send('put user')

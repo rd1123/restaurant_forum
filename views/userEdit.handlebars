@@ -1,0 +1,13 @@
+<form action="/users/{{user.id}}?_method=PUT" method="post">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control col-6" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
+  </div>
+
+  <div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" class="form-control-file" id="image" name="image">
+  </div>
+
+  <button type="submit" class="btn btn-primary">submit</button>
+</form>

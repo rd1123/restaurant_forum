@@ -62,7 +62,6 @@ const userController = {
       ]
     }).then(userResult => {
       const data = userResult.Comments.map(item => (item.Restaurant.dataValues))
-      console.log(...data)
       return res.render('user', { userResult: data })
 
     })

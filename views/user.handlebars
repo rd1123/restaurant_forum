@@ -11,7 +11,10 @@
     </div>
   </div>
 </div>
-
+{{#if userResult}}
+<h4>已評論過餐廳</h4>
+<hr>
+{{/if}}
 <div class="d-flex flex-wrap py-4 px-4">
   {{#each userResult}}
   <a href="/restaurants/{{this.id}}">

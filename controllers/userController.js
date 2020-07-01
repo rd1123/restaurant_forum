@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Comment = db.Comment
+const Restaurant = db.Restaurant
 
 const imgur = require('imgur-node-api')
 const { putUsers } = require('./adminController')
@@ -53,7 +55,17 @@ const userController = {
       req.flash('error_msg', '未具有相關權限')
       return res.redirect(`/users/${req.user.id}`)
     }
-    res.render('user')
+
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Comment, include: Restaurant }
+      ]
+    }).then(userResult => {
+      const data = userResult.Comments.map(item => (item.Restaurant.dataValues))
+      console.log(...data)
+      return res.render('user', { userResult: data })
+
+    })
   },
   editUser: (req, res) => {
     if (req.params.id != req.user.id) {

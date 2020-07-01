@@ -57,6 +57,7 @@ let restController = {
       return res.render('restaurant', { restaurant: restaurant.toJSON() })
     })
   },
+
   getFeeds: (req, res) => {
     return Restaurant.findAll({
       limit: 10,
@@ -75,7 +76,15 @@ let restController = {
         return res.render('feeds', { restauratns: restaurants, comments: comments })
       })
     })
+  },
+
+  getDashboard: (req, res) => {
+    Restaurant.findByPk(req.params.id, { include: [Category, Comment] }).then(restaurant => {
+      console.log(restaurant)
+      res.render('dashboard', { restaurant: restaurant.toJSON() })
+    })
   }
+
 }
 
 module.exports = restController

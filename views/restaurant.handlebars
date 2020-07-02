@@ -2,6 +2,9 @@
   <div class="col-md-12">
     <div class="row pl-3">
       <h1 class="mr-3">{{restaurant.name}}</h1>
+      <div class="info">
+        <a href="/restaurants/{{restaurant.id}}/dashboard"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+      </div>
     </div>
     <div class="row ml-1">
       <div class="favorite mr-3">
@@ -17,7 +20,7 @@
         </form>
         {{/if}}
       </div>
-      <div class="like">
+      <div class="like mr-3">
         {{#if isLiked}}
         <form action="/like/{{restaurant.id}}?_method=DELETE" method="POST">
           <button type="submit" style="border: none; background:none; padding: 0;"><i class="fa fa-thumbs-up"
@@ -45,7 +48,6 @@
   </div>
   <div class="col-md-6">
     <p>{{restaurant.description}}</p>
-    <a href="/restaurants/{{restaurant.id}}/dashboard" class="btn btn-primary" style="height: 40px;">Dashboard</a>
   </div>
   <hr>
 </div>

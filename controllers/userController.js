@@ -4,6 +4,7 @@ const User = db.User
 const Comment = db.Comment
 const Restaurant = db.Restaurant
 const Favorite = db.Favorite
+const Like = db.Like
 
 const imgur = require('imgur-node-api')
 const { putUsers } = require('./adminController')
@@ -125,6 +126,29 @@ const userController = {
         return res.redirect('back')
       })
     })
+  },
+
+  getLike: (req, res) => {
+    return Like.create({
+      UserId: req.user.id,
+      RestaurantId: req.params.restaurantId
+    }).then(likes => {
+      res.redirect('back')
+    })
+  },
+
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        RestaurantId: req.params.restaurantId
+      }
+    }).then(likes => {
+      likes.destroy().then(likes => {
+        res.redirect('back')
+      })
+    })
   }
+
 }
 module.exports = userController

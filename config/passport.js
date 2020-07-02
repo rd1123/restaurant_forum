@@ -30,7 +30,7 @@ passport.deserializeUser((id, cb) => {
       { model: Restaurant, as: 'LikedRestaurants' }
     ]
   }).then(user => {
-    user = user.toJSON()
+    user = user
     return cb(null, user)
   })
 })

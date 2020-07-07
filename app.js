@@ -18,6 +18,7 @@ app.engine('handlebars', handlebars({
 }))
 app.set('view engine', ('handlebars'))
 
+app.use(express.static('public'))
 app.use('/upload', express.static(__dirname + '/upload'))
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: 'mySecret', resave: false, saveUninitialized: false }))

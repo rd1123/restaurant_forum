@@ -54,25 +54,23 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    if (req.params.id != req.user.id) {
-      req.flash('error_msg', '未具有相關權限')
-      return res.redirect(`/users/${req.user.id}`)
-    }
-
     return User.findByPk(req.params.id, {
       include: [
-        { model: Comment, include: Restaurant }
+        { model: Comment, include: Restaurant },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Restaurant, as: 'FavoritedRestaurants' }
       ]
     }).then(userResult => {
       const data = userResult.Comments.map(item => (item.Restaurant.dataValues))
-      return res.render('user', { userResult: data })
-
+      const isFollowed = req.user.Followings.some(item => item.id === userResult.dataValues.id)
+      return res.render('user', { userResult: data, user: userResult.dataValues, isFollowed })
     })
   },
   editUser: (req, res) => {
     if (req.params.id != req.user.id) {
       req.flash('error_msg', '未具有相關權限')
-      return res.redirect(`/users/${req.user.id}`)
+      return res.redirect('back')
     }
     res.render('userEdit')
   },

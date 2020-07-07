@@ -4,10 +4,24 @@
   </div>
   <div style="width: 18em;">
     <div class="card-body">
-      <h5 class="title">{{user.name}}</h5>
-      <p calss="email">{{user.email}}</p>
-      <p calss="comment">{{userResult.length}}則已評論餐廳</p>
-      <a href="/users/{{user.id}}/edit" class="btn btn-primary">edit</a>
+      <div class="row" style="padding-left: 15px;">
+        <h5 class="title">{{user.name}}</h5><a href="/users/{{user.id}}/edit"><i class="fa fa-pencil-square-o ml-2"
+            aria-hidden="true"></i></a>
+      </div>
+      <div class="profile-details">
+        <p calss="email">{{user.email}}</p>
+        <p calss="comment">{{userResult.length}}則已評論餐廳</p>
+        <p class="favorites">{{user.FavoritedRestaurants.length}}個已收藏的餐廳</p>
+        <p class="followings">{{user.Followings.length}}followings(追蹤者)</p>
+        <p class="followers mb-2">{{user.Followers.length}}followers(追隨者)</p>
+      </div>
+      {{#if isFollowed }}
+      <form action="/following/{{user.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+          type="submit" class="btn btn-outline-secondary">取消追蹤</button></form>
+      {{else}}
+      <form action="/following/{{user.id}}" method="POST" style="display: contents;"><button type="submit"
+          class="btn btn-primary">追蹤</button></form>
+      {{/if}}
     </div>
   </div>
 </div>

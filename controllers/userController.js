@@ -112,7 +112,11 @@ const userController = {
       UserId: req.user.id,
       RestaurantId: req.params.restaurantId
     }).then(favorite => {
-      res.redirect('back')
+      Restaurant.findByPk(favorite.RestaurantId).then(restaurant => {
+        restaurant.increment('favoriteCount').then(restaurant => {
+          res.redirect('back')
+        })
+      })
     })
   },
 
@@ -123,8 +127,12 @@ const userController = {
         RestaurantId: req.params.restaurantId
       }
     }).then(favorite => {
-      favorite.destroy().then(restaurant => {
-        return res.redirect('back')
+      Restaurant.findByPk(favorite.RestaurantId).then(restaurant => {
+        restaurant.decrement('favoriteCount').then(restaurant => {
+          favorite.destroy().then(restaurant => {
+            return res.redirect('back')
+          })
+        })
       })
     })
   },

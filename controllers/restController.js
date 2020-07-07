@@ -96,6 +96,24 @@ let restController = {
       console.log(restaurant)
       res.render('dashboard', { restaurant: restaurant.toJSON() })
     })
+  },
+
+  getTopRestaurants: (req, res) => {
+    Restaurant.findAll({
+      limit: 10,
+      raw: true,
+      nest: true,
+      order: [['favoriteCount', 'DESC']],
+    }).then(restaurants => {
+      const data = restaurants.map(r => ({
+        ...r,
+        description: r.description.substring(0, 50),
+        isFavorited: req.user.FavoritedRestaurants.some(d => d.id === r.id),
+        isLiked: req.user.LikedRestaurants.some(d => d.id === r.id)
+      }))
+      res.render('topRestaurants', { restaurants: data })
+    })
+
   }
 }
 

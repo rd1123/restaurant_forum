@@ -4,6 +4,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
+const bodyParser = require('body-parser')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -20,7 +21,8 @@ app.set('view engine', ('handlebars'))
 
 app.use(express.static('public'))
 app.use('/upload', express.static(__dirname + '/upload'))
-app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 app.use(session({ secret: 'mySecret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -38,4 +40,4 @@ app.listen(port, () => {
   console.log(`Example app listening on ${port}`)
 })
 
-require('./routes')(app, passport)
+require('./routes')(app)

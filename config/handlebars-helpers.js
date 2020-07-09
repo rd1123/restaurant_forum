@@ -10,5 +10,11 @@ module.exports = {
 
   moment: function (a) {
     return moment(a).fromNow()
+  },
+
+  ifno: function (a, options) {
+    if (a.length === 0) {
+      return options.fn(this)
+    }
   }
 }

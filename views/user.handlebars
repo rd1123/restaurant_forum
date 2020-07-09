@@ -25,14 +25,85 @@
     </div>
   </div>
 </div>
-{{#if userResult}}
-<h4>已評論過餐廳</h4>
-<hr>
-{{/if}}
-<div class="d-flex flex-wrap py-4 px-4">
-  {{#each userResult}}
-  <a href="/restaurants/{{this.id}}">
-    <img src="{{this.image}}" alt="restaurantImg" class="img px-2 py-2" style="width: 100px">
-  </a>
-  {{/each}}
+
+<div class="user-info row">
+  <div class="info-left col-4 px-0">
+
+    <div class="card my-2">
+      <div class="card-header">
+        {{user.Followings.length}}followings(追蹤者)
+      </div>
+      <div class="d-flex flex-wrap">
+        {{#each user.Followings}}
+        <a href="/users/{{this.dataValues.id}}">
+          <img src="{{this.dataValues.image}}" alt="usersImg" class="img px-2 py-2"
+            style="width: 100px; height: 100px;">
+        </a>
+        {{/each}}
+      </div>
+      {{#ifno user.Followings}}
+      <div class="px-2 py-2">
+        <p>尚未有追蹤者</p>
+      </div>
+      {{/ifno}}
+    </div>
+
+    <div class="card my-2">
+      <div class="card-header">
+        {{user.Followers.length}}followers(追隨者)
+      </div>
+      <div class="d-flex flex-wrap">
+        {{#each user.Followers}}
+        <a href="/users/{{this.dataValues.id}}">
+          <img src="{{this.dataValues.image}}" alt="usersImg" class="img px-2 py-2"
+            style="width: 100px; height: 100px;">
+        </a>
+        {{/each}}
+      </div>
+      {{#ifno user.Followers}}
+      <div class="px-2 py-2">
+        <p>尚未有追隨者</p>
+      </div>
+      {{/ifno}}
+    </div>
+  </div>
+
+  <div class="info-right col-8">
+    <div class="card my-2">
+      <div class="card-header">
+        {{userResult.length}}個已評論餐廳
+      </div>
+      <div class=" d-flex flex-wrap">
+        {{#each userResult}}
+        <a href="/restaurants/{{this.id}}">
+          <img src="{{this.image}}" alt="restaurantImg" class="img px-2 py-2" style="width: 100px; height: 100px;">
+        </a>
+        {{/each}}
+      </div>
+      {{#ifno userResult}}
+      <div class="px-2 py-2">
+        <p>尚無評論餐廳</p>
+      </div>
+      {{/ifno}}
+    </div>
+
+    <div class="card my-2">
+      <div class="card-header">
+        {{user.FavoritedRestaurants.length}}個已收藏餐廳
+      </div>
+      <div class=" d-flex flex-wrap">
+        {{#each user.FavoritedRestaurants}}
+        <a href="/restaurants/{{this.dataValues.id}}">
+          <img src="{{this.dataValues.image}}" alt="restaurantImg" class="img px-2 py-2"
+            style="width: 100px; height: 100px;">
+        </a>
+        {{/each}}
+      </div>
+      {{#ifno user.FavoritedRestaurants}}
+      <div class="px-2 py-2">
+        <p>尚無收藏餐廳</p>
+      </div>
+      {{/ifno}}
+    </div>
+  </div>
 </div>

@@ -62,6 +62,7 @@ const userController = {
         { model: Restaurant, as: 'FavoritedRestaurants' }
       ]
     }).then(userResult => {
+      // console.log(userResult.Followings)
       const data = userResult.Comments.map(item => (item.Restaurant.dataValues))
       const isFollowed = req.user.Followings.some(item => item.id === userResult.dataValues.id)
       return res.render('user', { userResult: data, user: userResult.dataValues, isFollowed })

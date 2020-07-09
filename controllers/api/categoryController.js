@@ -8,6 +8,21 @@ const categoriesController = {
     categoriesService.getCategories(req, res, (data) => {
       return res.json(data)
     })
+  },
+  postCategory: (req, res) => {
+    categoriesService.postCategory(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+  putCategory: (req, res) => {
+    categoriesService.putCategory(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+  deleteCategory: (req, res) => {
+    categoriesService.deleteCategory(req, res, (data) => {
+      return res.json(data)
+    })
   }
 }
 

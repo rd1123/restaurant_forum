@@ -71,5 +71,45 @@ const adminService = {
       })
     }
   },
+  putRestaurant: (req, res, callback) => {
+    if (!req.body.name) {
+      return callback({ status: 'error', message: "name didn't exist" })
+    }
+
+    const input = req.body
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        return Restaurant.findByPk(req.params.id).then((restaurant) => {
+          restaurant.update({
+            name: input.name,
+            tel: input.tel,
+            address: input.address,
+            description: input.description,
+            opening_hours: input.opening_hours,
+            image: file ? img.data.link : restaurant.image,
+            CategoryId: req.body.categoryId
+          }).then(restaurant => {
+            return callback({ status: 'success', message: "restaurant was successfully update" })
+          })
+        })
+      })
+    } else {
+      return Restaurant.findByPk(req.params.id).then((restaurant) => {
+        restaurant.update({
+          name: input.name,
+          tel: input.tel,
+          address: input.address,
+          description: input.description,
+          opening_hours: input.opening_hours,
+          image: restaurant.image,
+          CategoryId: req.body.categoryId
+        }).then(restaurant => {
+          return callback({ status: 'success', message: 'restaurant was successfully update' })
+        })
+      })
+    }
+  },
 }
 module.exports = adminService

@@ -80,27 +80,16 @@ let adminController = {
 
   /////// user relation
   getUsers: (req, res) => {
-    User.findAll({ raw: true }).then((users) => {
-      for (let item in users) {
-        users[item].role = 'admin'
-        users[item].unrole = 'user';
-        if (users[item].isAdmin == 0) {
-          users[item].role = 'user'
-          users[item].unrole = 'admin'
-        }
-      }
-      return res.render('admin/users', { users: users })
-    }).catch((err) => res.status(422).json(err))
-
+    adminService.getUsers(req, res, (data) => {
+      return res.render('admin/users', data)
+    })
   },
 
   putUsers: (req, res) => {
-    User.findByPk(req.params.id).then((user) => {
-      return user.update({
-        isAdmin: !user.isAdmin
-      })
-
-    }).then(user => res.redirect('/admin/users'))
+    adminService.putUsers(req, res, (data) => {
+      req.flash('success_msg', data['message'])
+      return res.redirect('/admin/users')
+    })
   }
 }
 

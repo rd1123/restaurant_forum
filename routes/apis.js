@@ -29,6 +29,8 @@ router.get('/admin/categories', authenticated, authenticatedAdmin, categoryContr
 router.post('/admin/categories', authenticated, authenticatedAdmin, categoryController.postCategory)
 router.put('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.putCategory)
 router.delete('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.deleteCategory)
+router.get('/admin/users', authenticated, authenticatedAdmin, adminController.getUsers)
+router.put('/admin/users/:id', authenticated, authenticatedAdmin, adminController.putUsers)
 
 router.post('/signin', userController.signIn)
 router.post('/signup', userController.signOut)

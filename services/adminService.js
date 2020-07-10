@@ -111,5 +111,19 @@ const adminService = {
       })
     }
   },
+  getUsers: (req, res, callback) => {
+    return User.findAll({ raw: true }).then((users) => {
+      callback({ users: users })
+    })
+  },
+  putUsers: (req, res, callback) => {
+    User.findByPk(req.params.id).then((user) => {
+      user.update({
+        isAdmin: !user.isAdmin
+      }).then(user => {
+        callback({ status: 'sucess', message: 'user was successfully to update' })
+      })
+    })
+  }
 }
 module.exports = adminService

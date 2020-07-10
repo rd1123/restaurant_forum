@@ -22,11 +22,21 @@
     <tr>
       <th scope="row">{{this.id}}</th>
       <td>{{this.email}}</td>
-      <td>{{this.role}}</td>
+      <td>
+        {{#if this.isAdmin}}
+        admin
+        {{else}}
+        user
+        {{/if}}
+      </td>
       <td>
         <form action="/admin/users/{{this.id}}?_method=PUT" method="POST">
           <button type="submit" class="btn btn-link">
-            set as {{this.unrole}}
+            {{#if this.isAdmin}}
+            set as user
+            {{else}}
+            set as admin
+            {{/if}}
           </button>
         </form>
       </td>

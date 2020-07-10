@@ -28,7 +28,7 @@ let restController = {
 
       const data = results.rows.map(r => ({
         ...r.dataValues,
-        description: r.dataValues.description.substring(0, 50),
+        description: (r.dataValues.description == null) ? '' : r.dataValues.description.substring(0, 50),
         categoryName: r.Category.name,
         isFavorited: req.user.FavoritedRestaurants.some(d => d.id === r.id),
         isLiked: req.user.LikedRestaurants.some(d => d.id === r.id)

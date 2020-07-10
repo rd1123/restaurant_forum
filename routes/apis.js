@@ -8,6 +8,7 @@ const passport = require('../config/passport')
 const adminController = require('../controllers/api/adminController')
 const categoryController = require('../controllers/api/categoryController')
 const userController = require('../controllers/api/userController')
+const restController = require('../controllers/api/restController')
 
 const authenticated = passport.authenticate('jwt', { session: false })
 const authenticatedAdmin = (req, res, next) => {
@@ -19,6 +20,15 @@ const authenticatedAdmin = (req, res, next) => {
   }
 }
 
+////// about restaurants
+router.get('/restaurants', authenticated, authenticatedAdmin, restController.getRestaurants)
+router.get('/restaurants/feeds', authenticated, authenticatedAdmin, restController.getFeeds)
+router.get('/restaurants/:id/dashboard', authenticated, authenticatedAdmin, restController.getDashboard)
+router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
+router.get('/restaurants/:id', authenticated, authenticatedAdmin, restController.getRestaurant)
+
+
+////// about admin
 router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
 router.get('/admin/restaurants/:id', authenticated, authenticatedAdmin, adminController.getRestaurant)
 router.post('/admin/restaurants', authenticated, authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
